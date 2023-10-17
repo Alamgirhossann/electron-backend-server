@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import { BookingModel, IBooking } from "./booking.interface";
+import { bookingStatus } from "./booking.constant";
 
 const BookingSchema = new Schema<IBooking, BookingModel>(
   {
@@ -34,6 +35,12 @@ const BookingSchema = new Schema<IBooking, BookingModel>(
     serviceId: {
       type: Schema.Types.ObjectId,
       ref: "ServiceList",
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: bookingStatus,
+      default: "pending",
     },
   },
   {

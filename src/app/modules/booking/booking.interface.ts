@@ -9,6 +9,7 @@ export interface IBooking {
   dateOfBooking: string;
   address: string;
   serviceId: Types.ObjectId | IServiceList;
+  status: "pending" | "confirm" | "cancel";
 }
 
 export type BookingModel = Model<IBooking, Record<string, unknown>>;

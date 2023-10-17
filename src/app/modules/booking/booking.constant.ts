@@ -6,3 +6,5 @@ export const bookingFilterableFields = [
 ];
 
 export const bookingSearchableFields = ["name", "email", "address"];
+
+export const bookingStatus = ["pending", "confirm", "cancel"];

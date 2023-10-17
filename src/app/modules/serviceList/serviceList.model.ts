@@ -1,5 +1,6 @@
-import { Schema, model } from 'mongoose'
-import { IServiceList, ServiceListModel } from './serviceList.interface'
+import { Schema, model } from "mongoose";
+import { IServiceList, ServiceListModel } from "./serviceList.interface";
+import { serviceAvailability } from "./serviceList.constant";
 
 const ServiceListSchema = new Schema<IServiceList, ServiceListModel>(
   {
@@ -21,8 +22,10 @@ const ServiceListSchema = new Schema<IServiceList, ServiceListModel>(
       required: true,
     },
     availability: {
-      type: Boolean,
-      default: true,
+      type: String,
+      required: true,
+      enum: serviceAvailability,
+      default: "Available",
     },
 
     rating: {
@@ -42,9 +45,9 @@ const ServiceListSchema = new Schema<IServiceList, ServiceListModel>(
       virtuals: true,
     },
   }
-)
+);
 
 export const ServiceList = model<IServiceList, ServiceListModel>(
-  'ServiceList',
+  "ServiceList",
   ServiceListSchema
-)
+);

@@ -52,6 +52,7 @@ const getAllBooking = async (
     andConditions.length > 0 ? { $and: andConditions } : {};
 
   const result = await Booking.find(whereConditions)
+    .populate("serviceId")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
@@ -69,7 +70,7 @@ const getAllBooking = async (
 };
 
 const getSingleBooking = async (id: string): Promise<IBooking | null> => {
-  const result = await Booking.findById(id);
+  const result = await Booking.findById(id).populate("serviceId");
   return result;
 };
 
