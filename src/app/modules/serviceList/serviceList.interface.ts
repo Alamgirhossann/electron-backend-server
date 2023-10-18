@@ -5,7 +5,7 @@ export type IServiceList = {
   description: string;
   images?: string;
   price: string;
-  availability: "Available" | "Not Available";
+  availability: "available" | "not available";
   rating: string;
   tag?: string[];
 };

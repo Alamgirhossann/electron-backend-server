@@ -25,7 +25,7 @@ const ServiceListSchema = new Schema<IServiceList, ServiceListModel>(
       type: String,
       required: true,
       enum: serviceAvailability,
-      default: "Available",
+      default: "available",
     },
 
     rating: {
