@@ -1,4 +1,4 @@
-import { Model, Types } from "mongoose";
+import { Model } from "mongoose";
 
 export type UserName = {
   firstName: string;
@@ -6,7 +6,7 @@ export type UserName = {
   middleName: string;
 };
 
-export type IAdmin = {
+export type ISuperAdmin = {
   id: string;
   name: UserName;
   profileImage?: string;
@@ -14,11 +14,7 @@ export type IAdmin = {
   gender?: "male" | "female";
 };
 
-export type AdminModel = Model<IAdmin, Record<string, unknown>>;
-
-export type IAdminFilters = {
+export type SuperAdminModel = Model<ISuperAdmin, Record<string, unknown>>;
+export type ISuperAdmintFilters = {
   searchTerm?: string;
-  id?: string;
-  email?: string;
-  gender?: "male" | "female";
 };

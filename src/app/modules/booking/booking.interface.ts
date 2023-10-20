@@ -1,5 +1,6 @@
 import { Model, Types } from "mongoose";
 import { IServiceList } from "../serviceList/serviceList.interface";
+import { IGeneralUser } from "../generalUser/generalUser.interface";
 
 export interface IBooking {
   name: string;
@@ -8,6 +9,7 @@ export interface IBooking {
   contactNo: string;
   dateOfBooking: string;
   address: string;
+  userId: string;
   serviceId: Types.ObjectId | IServiceList;
   status: "pending" | "confirm" | "cancel";
 }

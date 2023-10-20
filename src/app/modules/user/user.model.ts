@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { Schema, model } from 'mongoose'
-import { IUser, UserModel } from './user.interface'
-import bcrypt from 'bcrypt'
-import config from '../../../config'
+import { Schema, model } from "mongoose";
+import { IUser, UserModel } from "./user.interface";
+import bcrypt from "bcrypt";
+import config from "../../../config";
 
 const newSchema = new Schema<IUser, UserModel>(
   {
@@ -27,21 +27,13 @@ const newSchema = new Schema<IUser, UserModel>(
     passwordChangeAt: {
       type: Date,
     },
-    student: {
-      type: Schema.Types.ObjectId,
-      ref: 'Student',
-    },
-    faculty: {
-      type: Schema.Types.ObjectId,
-      ref: 'Faculty',
-    },
     generalUser: {
       type: Schema.Types.ObjectId,
-      ref: 'GeneralUser',
+      ref: "GeneralUser",
     },
     admin: {
       type: Schema.Types.ObjectId,
-      ref: 'Admin',
+      ref: "Admin",
     },
   },
   {
@@ -50,29 +42,13 @@ const newSchema = new Schema<IUser, UserModel>(
       virtuals: true,
     },
   }
-)
-
-// newSchema.methods.isUserExist = async function (
-//   id: string
-// ): Promise<Partial<IUser> | null> {
-//   return await User.findOne(
-//     { id },
-//     { id: 1, password: 1, role: 1, needsPasswordChange: 1 }
-//   )
-// }
-
-// newSchema.methods.isPasswordMatched = async function (
-//   givenPassword: string,
-//   savedPassword: string
-// ): Promise<boolean> {
-//   return await bcrypt.compare(givenPassword, savedPassword)
-// }
+);
 
 newSchema.statics.isUserExist = async function (
   id: string
 ): Promise<Pick<
   IUser,
-  'id' | 'password' | 'role' | 'needsPasswordChange' | 'generalUser' | 'admin'
+  "id" | "password" | "role" | "needsPasswordChange" | "generalUser" | "admin"
 > | null> {
   return await User.findOne(
     { id },
@@ -84,28 +60,28 @@ newSchema.statics.isUserExist = async function (
       generalUser: 1,
       admin: 1,
     }
-  )
-}
+  );
+};
 
 newSchema.statics.isPasswordMatched = async function (
   givenPassword: string,
   savedPassword: string
 ): Promise<boolean> {
-  return await bcrypt.compare(givenPassword, savedPassword)
-}
+  return await bcrypt.compare(givenPassword, savedPassword);
+};
 
-newSchema.pre('save', async function (next) {
-  const user = this
+newSchema.pre("save", async function (next) {
+  const user = this;
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_round)
-  )
+  );
 
   if (!user.needsPasswordChange) {
-    user.passwordChangeAt = new Date()
+    user.passwordChangeAt = new Date();
   }
 
-  next()
-})
+  next();
+});
 
-export const User = model<IUser, UserModel>('User', newSchema)
+export const User = model<IUser, UserModel>("User", newSchema);

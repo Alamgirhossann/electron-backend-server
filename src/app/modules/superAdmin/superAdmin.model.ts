@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { AdminModel, IAdmin } from "./admin.interface";
+import { ISuperAdmin, SuperAdminModel } from "./superAdmin.interface";
 
-const AdminSchema = new Schema<IAdmin, AdminModel>(
+const SuperAdminSchema = new Schema<ISuperAdmin, SuperAdminModel>(
   {
     id: {
       type: String,
@@ -25,12 +25,10 @@ const AdminSchema = new Schema<IAdmin, AdminModel>(
       },
       required: true,
     },
-
     gender: {
       type: String,
       enum: ["male", "female"],
     },
-
     email: {
       type: String,
       unique: true,
@@ -38,6 +36,7 @@ const AdminSchema = new Schema<IAdmin, AdminModel>(
     },
     profileImage: {
       type: String,
+      required: false,
     },
   },
   {
@@ -45,4 +44,7 @@ const AdminSchema = new Schema<IAdmin, AdminModel>(
   }
 );
 
-export const Admin = model<IAdmin, AdminModel>("Admin", AdminSchema);
+export const SuperAdmin = model<ISuperAdmin, SuperAdminModel>(
+  "SuperAdmin",
+  SuperAdminSchema
+);

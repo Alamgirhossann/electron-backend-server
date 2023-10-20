@@ -36,6 +36,10 @@ const BookingSchema = new Schema<IBooking, BookingModel>(
       type: Schema.Types.ObjectId,
       ref: "ServiceList",
     },
+    userId: {
+      type: String,
+      // ref: "GeneralUser",
+    },
     status: {
       type: String,
       required: true,

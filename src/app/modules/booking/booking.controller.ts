@@ -10,6 +10,7 @@ import { IBooking } from "./booking.interface";
 
 const createBooking = catchAsync(async (req: Request, res: Response) => {
   const { ...bookingData } = req.body;
+  // console.log(bookingData);
   const result = await BookingService.createBooking(bookingData);
 
   sendResponse(res, {
@@ -23,8 +24,15 @@ const createBooking = catchAsync(async (req: Request, res: Response) => {
 const getAllBooking = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookingFilterableFields);
   const paginationOptions = pick(req.query, pagination);
+  const user = req.user;
 
-  const result = await BookingService.getAllBooking(filters, paginationOptions);
+  // console.log(user);
+
+  const result = await BookingService.getAllBooking(
+    filters,
+    paginationOptions,
+    user
+  );
 
   sendResponse<IBooking[]>(res, {
     statusCode: httpStatus.OK,

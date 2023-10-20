@@ -1,18 +1,32 @@
-import express from 'express'
-import validateRequest from '../../middlewares/validateRequest'
-import { AdminController } from './admin.controller'
-import { AdminValidation } from './admin.validation'
-const router = express.Router()
+import express from "express";
+import validateRequest from "../../middlewares/validateRequest";
+import { AdminController } from "./admin.controller";
+import { AdminValidation } from "./admin.validation";
+import { ENUM_USER_ROLE } from "../../../enums/user";
+import auth from "../../middlewares/auth";
+const router = express.Router();
 
-router.get('/:id', AdminController.getSingleAdmin)
-router.post('/:id', AdminController.userProfile)
+router.get(
+  "/:id",
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  AdminController.getSingleAdmin
+);
 router.patch(
-  '/:id',
+  "/:id",
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   validateRequest(AdminValidation.updateAdmin),
   AdminController.updateAdmin
-)
-router.delete('/:id', AdminController.deleteAdmin)
+);
+router.delete(
+  "/:id",
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  AdminController.deleteAdmin
+);
 
-router.get('/', AdminController.getAllAdmins)
+router.get(
+  "/",
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  AdminController.getAllAdmins
+);
 
-export const AdminRoutes = router
+export const AdminRoutes = router;
